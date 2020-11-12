@@ -51,7 +51,7 @@ password_table <- passwords_full %>%
     '2' = "Second",
     '3' = "Third") %>%
   tab_spanner(
-    label = "Most Common Passwords",
+    label = "Most Popular Passwords",
     columns = 4:6) %>%
   fmt_number(columns = 2:3, decimals = 1) %>%
   tab_source_note(source_note = "Information is Beautiful: 
@@ -59,15 +59,13 @@ password_table <- passwords_full %>%
   tab_footnote(footnote = "Passwords ranked on a scale of 1-10 relative to 500 other bad passwords
                (outliers over 10 removed)",
                locations = cells_column_labels(2)) %>%
-  tab_footnote(footnote = "This data represents the amount of time it would take to crack the password offline",
+  tab_footnote(footnote = "The amount of time it would take to crack the password offline",
                locations = cells_column_labels(3)) %>%
   cols_align(align = "center") %>%
   tab_options(
     heading.background.color = "lightgray",
     source_notes.background.color = "lightgray",
   )
-
-password_table
 
 # View the table
 password_table
