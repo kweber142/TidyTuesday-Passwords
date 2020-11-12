@@ -34,19 +34,21 @@ passwords_full <- passwords_category %>%
   left_join(password_examples, by = "category")
 
 # I want to figure out how to find the average time to crack the password by randomly guessing
-# So I created this "fix_value" function, which would theoretically make all values and time_units the same (minutes)
+# So I created this "fix_value" function, which would theoretically make all values and time_units the same (hours)
 # And then I would need to summarize this data for each category
 # I do not know how to apply this to the passwords_category table above so that I have all of the summarized data there
 
 fix_value <- function(value, time_unit) {
-  if (time_unit == "hours") {
+  if (time_unit == "seconds") {
+    return(value/3600)
+  } else if (time_unit == "minutes") {
     return(value/60)
   } else if (time_unit == "days") {
-    return(value/1440)
+    return(value*24)
   } else if (time_unit == "months") {
-    return(value/43200)
+    return(value*720)
   } else if (time_unit == "years") {
-    return(value/518400)
+    return(value*8640)
   } else {
     return(value)
   }
