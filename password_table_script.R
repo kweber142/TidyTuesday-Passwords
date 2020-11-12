@@ -9,9 +9,10 @@ passwords <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/
 
 # Cleaning up the data
 
-# Summarize raw data based on password category
+# Summarize raw data based on password category, removing strength outliers
 passwords_category <- passwords %>%
   group_by(category) %>%
+  filter(strength <= 10) %>%
   summarize(avg_strength = mean(strength), 
             avg_offline = mean(offline_crack_sec,
             avg_guess_min = mean(value)))%>%
@@ -53,7 +54,11 @@ password_table <- passwords_full %>%
     label = "Most Common Passwords",
     columns = 4:6) %>%
   fmt_number(columns = 2:3, decimals = 1) %>%
-  tab_source_note(source_note = "This data comes from Knowledge is Beautiful") %>%
+  tab_source_note(source_note = "Information is Beautiful: 
+                  https://informationisbeautiful.net/visualizations/top-500-passwords-visualized/") %>%
+  tab_footnote(footnote = "Passwords ranked on a scale of 1-10 relative to 500 other bad passwords
+               (outliers over 10 removed)",
+               locations = cells_column_labels(2)) %>%
   tab_footnote(footnote = "This data represents the amount of time it would take to crack the password offline",
                locations = cells_column_labels(3)) %>%
   cols_align(align = "center") %>%
@@ -61,6 +66,8 @@ password_table <- passwords_full %>%
     heading.background.color = "lightgray",
     source_notes.background.color = "lightgray",
   )
+
+password_table
 
 # View the table
 password_table
